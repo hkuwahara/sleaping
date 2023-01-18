@@ -75,7 +75,7 @@ The task 'pair' downsamples fastq data from a pair of input files. This can be u
 
 ## Examples
 
-###  example 1
+###  Example 1
 Downsample gzipped fastq files for paired-end reads (in1.fastq.gz and in2.fatsq.gz) using sleaping with random seed 12345 to have 1 million read-pairs and output gzipped fastq files (out1.fastq.gz and out2.fastq.gz). There are two ways to do this: one using the single task twice, each with the same random seed and the other using the pair task. With single:
 
 	fadso single -r 12345 -k 1000000 -i in1.fastq.gz -m sleaping -o out1.fastq.gz -z
@@ -86,8 +86,8 @@ And with pair:
 	fadso pair -r 12345 -k 1000000 -1 in1.fastq.gz -2 in2.fastq.gz -m sleaping -a out1.fastq.gz -b out2.fastq.gz -z
  	
 		
-###  example 2
-Take input fastq data (either gzipped or plain) for single-end reads from standard input, downsample that to have 2 million reads using Algorithm R with random seed 123, and output a plain fastq file called out.fastq
+###  Example 2
+Take input fastq data (either gzipped or plain) for single-end reads from standard input, downsample that to have 2 million reads using Algorithm R with random seed 123, and output a plain fastq file called out.fastq.
 
 	fadso single -r 123 -k 2000000 -i stdin -m r -o out.fastq
 	 	    
