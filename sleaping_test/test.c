@@ -32,7 +32,7 @@ static UINT _getNextGeometricRandom( double p );
 
 
 int strToUINT(UINT *val, char *str);
-
+double strToDouble(UINT *val, char *str);
 
 static void init_genrand64(UINT seed); 
 static UINT genrand64_int64();
@@ -55,7 +55,7 @@ typedef struct{
 
 static int _computeStats( UINT *reservior, UINT len, UINT max, STAT_T *stat);
 
-#define SLEAP_SIZE_PROP 0.005 
+#define SLEAP_SIZE_PROP (0.005) 
 static UINT sleapSizeProp = SLEAP_SIZE_PROP;
 
 int main(int argc, char *argv[]){
@@ -175,7 +175,7 @@ static int _doSleap( UINT *reservior, UINT reserviorSize, UINT totalSize) {
 	UINT j = 0;
 	UINT k = 0;
 	UINT nextStep = 0;
-	UINT leapSize = (UINT)reserviorSize*SLEAP_SIZE_PROP;
+	UINT leapSize = (UINT)reserviorSize*sleapSizeProp;
 	UINT ranIndex = 0;
 	UINT endR = (UINT)(reserviorSize<<1);	
 	double p = 0.0;
