@@ -32,7 +32,7 @@ static UINT _getNextGeometricRandom( double p );
 
 
 int strToUINT(UINT *val, char *str);
-double strToDouble(UINT *val, char *str);
+
 
 static void init_genrand64(UINT seed); 
 static UINT genrand64_int64();
@@ -55,8 +55,11 @@ typedef struct{
 
 static int _computeStats( UINT *reservior, UINT len, UINT max, STAT_T *stat);
 
-#define SLEAP_SIZE_PROP (0.005) 
-static UINT sleapSizeProp = SLEAP_SIZE_PROP;
+#define SLEAP_SIZE_PROP 0.005 
+
+//#define ALGO_R
+//#define ALGO_L
+#define LEAP
 
 int main(int argc, char *argv[]){
 	UINT i = 0;
@@ -69,10 +72,10 @@ int main(int argc, char *argv[]){
 	UINT totalSize = 400000000;
 	UINT randSeed = 1236553;
 	STAT_T s;
-	SAMPLER_FUNC *func = _doSleap;
+	SAMPLER_FUNC *func = _doSleap;;
 	
 	if(argc < 5){
-		fprintf(stderr, "usage: <program> <method> <random_seed> <reservoir_size> <total_size> <sleap_size_prop>\n");
+		fprintf(stderr, "usage: <program> <method> <random_seed> <reservoir_size> <total_size>\n");
 		return 1;
 	}
 	if(strcmp(argv[1], "R") == 0) {
@@ -86,9 +89,10 @@ int main(int argc, char *argv[]){
 	else if( strcmp(argv[1], "S") == 0){
 		name =  "S";
 		func = _doSleap;
-		if( argc > 5 ) {
-			strToDouble(&sleapSizeProp, argv[5]);  
-		}
+	}
+	else if( strcmp(argv[1], "S_log") == 0){
+		name =  "S_log";
+		func = _doSleap;
 	}
 	else if( strcmp(argv[1], "Z") == 0){
 		name =  "Z";
@@ -175,13 +179,11 @@ static int _doSleap( UINT *reservior, UINT reserviorSize, UINT totalSize) {
 	UINT j = 0;
 	UINT k = 0;
 	UINT nextStep = 0;
-	UINT leapSize = (UINT)reserviorSize*sleapSizeProp;
+	UINT leapSize = (UINT)reserviorSize*SLEAP_SIZE_PROP;
 	UINT ranIndex = 0;
 	UINT endR = (UINT)(reserviorSize<<1);	
 	double p = 0.0;
-	double q = 0.0;
 	double u = 0.0;
-	double threshold = 0.0;
 		
 	for(i = 0; i < reserviorSize; i++){
 		reservior[i] = i;
@@ -202,7 +204,7 @@ static int _doSleap( UINT *reservior, UINT reserviorSize, UINT totalSize) {
 			reservior[ranIndex] = i;
 		}
 	}
-#if 0	
+#if 1	
 	double lambda = 0.0;
 	for(i -= 1; i < totalSize; i += leapSize){
 		p = (reserviorSize)/(double)(i+(leapSize>>1)+1);
@@ -222,6 +224,8 @@ static int _doSleap( UINT *reservior, UINT reserviorSize, UINT totalSize) {
 		}
 	}
 #else 
+	double q = 0.0;
+	double threshold = 0.0;
 	for(i -= 1; i < totalSize; i += leapSize){
 		p = (reserviorSize)/(double)(i+(leapSize>>1)+1);
 		q = 1.0 - p;
@@ -450,17 +454,6 @@ int strToUINT(UINT *val, char *str) {
 	return 0;
 }
 
-
-double strToDouble(UINT *val, char *str) {
-	char *endp = NULL;
-	
-	*val = strtod( str, &endp );
-
-	if( *endp != '\0' ) {
-		return 0.0; 
-	}
-	return 0.0;
-}
 
 
 
