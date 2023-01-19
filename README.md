@@ -95,7 +95,7 @@ Take input fastq data (either gzipped or plain) for single-end reads from standa
 	fadso single -r 123 -k 2000000 -i stdin -m r -o out.fastq
 
 ## Performance evaluation of various reservoir sampling methods
-Code to test the performance of various reservoir sampling methods is in test_sampling/test.c.
+Code to test the performance of various reservoir sampling methods is sleaping_test/test.c.
 
 
 
