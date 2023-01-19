@@ -1,7 +1,10 @@
 # Sleaping
 
 ## Fadso
-Fadso is a tool that downsamples fastq data using sleaping, an efficient approximate reservoir sampling algorithm  It takes gzipped or plain fastq files as input and outputs gzipped or plain fastq files. [This](http://www.aaa.bbb.ccc) describes the sleaping method in detail.  Fadso was implemented in C.
+Fadso is a tool that downsamples fastq data using sleaping, an efficient approximate reservoir sampling algorithm, described in detail [here](http://www.aaa.bbb.ccc). 
+It takes gzipped or plain fastq files as input and outputs gzipped or plain fastq files.
+Fadso was implemented in C.
+For the generation of random numbers, Fadso uses MT19937-64 (2004/9/29 version), a 64-bit version of Mersenne Twister pseudorandom number generator by Makoto Matsumoto and Takuji Nishimura.
 
 ## Installation of Fadso
 This section shows an installation procedure using cmake. 
@@ -12,7 +15,7 @@ This section shows an installation procedure using cmake.
 3. Go to FADSO_BIN_DIR, and do cmake SLEAPING_HOME, and do cmake --build .	
 	
 
-## Usage
+## Usage of Fadso
 
 	Usage: fadso <task> [task-attributes]
  where implemented tasks are currently 'single' and 'pair'.  
@@ -90,6 +93,9 @@ And with pair:
 Take input fastq data (either gzipped or plain) for single-end reads from standard input, downsample that to have 2 million reads using Algorithm R with random seed 123, and output a plain fastq file called out.fastq.
 
 	fadso single -r 123 -k 2000000 -i stdin -m r -o out.fastq
-	 	    
+
+## Performance evaluation of various reservoir sampling methods
+Code to test the performance of various reservoir sampling methods is in test_sampling/test.c.
+
 
 
