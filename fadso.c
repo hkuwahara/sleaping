@@ -18,6 +18,7 @@ int main( int argc, char *argv[] )
 
 	if(argc <= 1){
 		fprintf(stderr, FADSO_USAGE_MESSAGE);
+		return ret;		
 	}
 	
 	specifiedTask = argv[1];

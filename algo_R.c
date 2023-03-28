@@ -118,11 +118,11 @@ static INT _fillResevoir(SUBSAMPLER *subsampler, READER *reader, ITEM_MANAGER *i
 	for(i=0; i < size; i++){
 		if((data = reader->readNextItem(reader)) == NULL ) {
 			fprintf(stderr, "couldn't fill out the resevior with %" PRIu64 " items\n", size);
-			return -1;
+			break;
 		}
 		if((item = itemManager->createItem(itemManager, data)) == NULL) {
 			fprintf(stderr, "couldn't fill out the resevior with %" PRIu64 " items\n", size);
-			return -1;
+			break;
 		}
 		reservoir[i] = item;
 	}
