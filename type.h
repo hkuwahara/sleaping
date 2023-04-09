@@ -133,7 +133,7 @@ struct _RECORD {
 "\t\t-i <input-file>. This specifies the input fastq file. If this option is not specified, then stdin is used as input.\n" \
 "\t\t-o <output-file>. This specifies the output fastq filepath. If this option is not specified, then stdout is used as output.\n" \
 "\t\t-m <downsampling-method>. This specifies which downsampling method to use.\n" \
-"\t\t\tValid method names are 'sleaping' for s-leaping and 'r' for Algorithm R.\n" \
+"\t\t\tValid method names are 'sleaping' for s-leaping, 'l' for Algorithm L, 'r' for Algorithm R, and 'z' for Algorithm Z.\n" \
 "\t\t\tIf this option is not specified, then s-leaping is used.\n" \
 "\t\t-l <line-length>. This specifies the maximum length of the lines in the input fastq file,\n"\
 "\t\t\twhich can be treated as the max read length. This option is mainly for long-read data.\n"\
@@ -149,7 +149,7 @@ struct _RECORD {
 "\t\t-a <read1-output-file>. This specifies the output fastq filepath for read 1. This attribute is required.\n" \
 "\t\t-b <read2-output-file>. This specifies the output fastq filepath for read 2. This attribute is required.\n" \
 "\t\t-m <downsampling-method>. This specifies which downsampling method to use.\n" \
-"\t\t\tValid method names are 'sleaping' for s-leaping and 'r' for Algorithm R.\n" \
+"\t\t\tValid method names are 'sleaping' for s-leaping, 'l' for Algorithm L, 'r' for Algorithm R, and 'z' for Algorithm Z.\n" \
 "\t\t\tIf this option is not specified, then s-leaping is used.\n" \
 "\t\t-l <line-length>. This specifies the maximum length of the lines in the input fastq file,\n"\
 "\t\t\twhich can be treated as the max read length. This option is mainly for long-read data.\n"\

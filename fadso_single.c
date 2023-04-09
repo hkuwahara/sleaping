@@ -11,6 +11,8 @@
 #include "random_num_gen.h"
 #include "sleaping.h"
 #include "algo_R.h"
+#include "algo_L.h"
+#include "algo_Z.h"
 #include "log.h"
 #include "type.h"
 #include "fastq_item_manager.h"
@@ -66,6 +68,18 @@ static int _initWork( int argc, char **argv, RECORD *rec ) {
 				}
 				else if(strcmp(optarg, "r") == 0) {
 					if((subsampler = createAlgoR()) == NULL) {
+						fprintf(stderr, "the creation of subsampler failed\n");
+						return -1;
+					}
+				}
+				else if(strcmp(optarg, "l") == 0) {
+					if((subsampler = createAlgoL()) == NULL) {
+						fprintf(stderr, "the creation of subsampler failed\n");
+						return -1;
+					}
+				}
+				else if(strcmp(optarg, "z") == 0) {
+					if((subsampler = createAlgoZ()) == NULL) {
 						fprintf(stderr, "the creation of subsampler failed\n");
 						return -1;
 					}
