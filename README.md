@@ -35,8 +35,8 @@ The task 'single' downsamples fastq data from a single input file. This can be u
 	-o <output-file>
 >This specifies the output fastq filepath. If this option is not specified, then stdout is used as output.
 
-	-m {sleaping | r}
->This specifies which downsampling method to use. Valid method names are 'sleaping' for s-leaping and 'r' for Algorithm R. If this option is not specified, then s-leaping is used.
+	-m {sleaping | l | r | z}
+>This specifies which downsampling method to use. Valid method names are 'sleaping' for s-leaping, 'l' for Algorithm L, 'r' for Algorithm R, and 'z' for Algorithm Z. If this option is not specified, then s-leaping is used.
 
 	-l <line-length>
 >This specifies the maximum length of the lines in the input fastq file, which can be treated as the max read length. This option is mainly for long-read data. For fastq files with read lengths smaller than 500, this option is not needed.
@@ -66,8 +66,8 @@ The task 'pair' downsamples fastq data from a pair of input files. This can be u
 	-b <read2-output-file>
 >This specifies the output fastq filepath for read 2. This attribute is required.
 
-	-m {sleaping | r}
->This specifies which downsampling method to use. Valid method names are 'sleaping' for s-leaping and 'r' for Algorithm R. If this option is not specified, then s-leaping is used.
+	-m {sleaping | l | r | z}
+>This specifies which downsampling method to use. Valid method names are 'sleaping' for s-leaping, 'l' for Algorithm L, 'r' for Algorithm R, and 'z' for Algorithm Z. If this option is not specified, then s-leaping is used.
 
 	-l <line-length>
 >This specifies the maximum length of the lines in the input fastq file, which can be treated as the max read length. This option is mainly for long-read data. For fastq files with read lengths smaller than 500, this option is not needed.
