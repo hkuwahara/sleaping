@@ -21,14 +21,6 @@ typedef struct {
 } LEAP_INFO;
 
 
-/*
- * Assuming that the reference human genome size is 3.2Gbp, the read-pair length is 300, and the target coverage rate is 0.4, 
- * the minimum number of reads required is count ~4.3M.  
- * Given that the minimum downsampling size for fastq data is 5M reads and the default leap size rate is 0.002, leap size is >= 10,000.
- *  The rejection prob for the (10M+1)-th read is 0.5 + 1/10M; the (10M+10,000)-th read, 0.5 + 0.001. estimated to be ~0.001248; the average number, 12.48; the sd, 3.533; 
- *  the lower end (mean - 3*sd), ~1.8845.  
- * 
- */
 #define DEFAULT_LEAP_SIZE_PROPORTION ((double)0.005)
 
 
