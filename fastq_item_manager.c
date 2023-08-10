@@ -38,6 +38,7 @@ static ITEM_MANAGER *_createFastqItemManager() {
 	itemManager->createItem = _createItem;
 	itemManager->copyContent = _copyContent;
 	itemManager->freeItem = _freeItem;
+	itemManager->growthSize = 10;
 
 	return itemManager;
 }
@@ -47,6 +48,7 @@ static ITEM_MANAGER *_createFastqItemManager() {
 static ITEM *_createItem(ITEM_MANAGER *manager, DATA_HOLDER *src) {
 	int i = 0;
 	int len = 0;
+	int growthSize = manager->growthSize;
 	char *buf = NULL;
 	FASTQ_DATA_HOLDER *holder = (FASTQ_DATA_HOLDER*)src;
 	FASTQ_ITEM *item = NULL;
@@ -65,11 +67,11 @@ static ITEM *_createItem(ITEM_MANAGER *manager, DATA_HOLDER *src) {
 		if(buf[len] == '\n'){
 			buf[len] = '\0';
 		}
-
-		if((data->lines[i] = (char*)MALLOC(sizeof(char)*(len+2))) == NULL) {
+		TRACE_3("ID = %x\tnew entry = %s; size = %i\n", (int)(&(data->lines[i])), buf, len + growthSize); 
+		if((data->lines[i] = (char*)MALLOC(sizeof(char)*(len+growthSize))) == NULL) {
 			return NULL;		
 		}
-		data->sizes[i] = len+2;
+		data->sizes[i] = len+growthSize;
 		strcpy(data->lines[i], buf);
 	}
 	item->key = holder->key;
@@ -81,6 +83,7 @@ static ITEM *_createItem(ITEM_MANAGER *manager, DATA_HOLDER *src) {
 static INT _copyContent(ITEM_MANAGER *manager, ITEM *dest, DATA_HOLDER *src) {
 	int i = 0;
 	int len = 0;
+	int growthSize = manager->growthSize;
 	char *buf = NULL;
 	FASTQ_DATA_HOLDER *holder = (FASTQ_DATA_HOLDER*)src;
 	FASTQ_ITEM *item = (FASTQ_ITEM*)dest;
@@ -92,11 +95,11 @@ static INT _copyContent(ITEM_MANAGER *manager, ITEM *dest, DATA_HOLDER *src) {
 		if(buf[len] == '\n'){
 			buf[len] = '\0';
 		}
-		if(data->sizes[i] < len){
-			if((data->lines[i] = (char*)REALLOC(data->lines[i], sizeof(char)*(len+2))) == NULL) {
+		if(data->sizes[i] <= len){
+			if((data->lines[i] = (char*)REALLOC(data->lines[i], sizeof(char)*(len+growthSize))) == NULL) {
 				return -1;		
 			}
-			data->sizes[i] = len+2;
+			data->sizes[i] = len+growthSize;
 		}
 		strcpy(data->lines[i], buf);
 	}

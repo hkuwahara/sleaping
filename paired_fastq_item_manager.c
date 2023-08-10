@@ -38,6 +38,7 @@ static ITEM_MANAGER *_createFastqItemManager() {
 	itemManager->createItem = _createItem;
 	itemManager->copyContent = _copyContent;
 	itemManager->freeItem = _freeItem;
+	itemManager->growthSize = 10;
 
 	return itemManager;
 }
@@ -47,6 +48,8 @@ static ITEM_MANAGER *_createFastqItemManager() {
 static ITEM *_createItem(ITEM_MANAGER *manager, DATA_HOLDER *src) {
 	int i = 0;
 	int len = 0;
+	int growthSize = manager->growthSize;
+	
 	char *buf = NULL;
 	PAIRED_FASTQ_DATA_HOLDER *holder = (PAIRED_FASTQ_DATA_HOLDER*)src;
 	PAIRED_FASTQ_ITEM *item = NULL;
@@ -69,10 +72,10 @@ static ITEM *_createItem(ITEM_MANAGER *manager, DATA_HOLDER *src) {
 		if(buf[len] == '\n'){
 			buf[len] = '\0';
 		}
-		if((data1->lines[i] = (char*)MALLOC(sizeof(char)*(len+2))) == NULL) {
+		if((data1->lines[i] = (char*)MALLOC(sizeof(char)*(len+growthSize))) == NULL) {
 			return NULL;		
 		}
-		data1->sizes[i] = len+2;
+		data1->sizes[i] = len+growthSize;
 		strcpy(data1->lines[i], buf);
 		
 		buf = holder->content->lines2[i];
@@ -80,10 +83,10 @@ static ITEM *_createItem(ITEM_MANAGER *manager, DATA_HOLDER *src) {
 		if(buf[len] == '\n'){
 			buf[len] = '\0';
 		}
-		if((data2->lines[i] = (char*)MALLOC(sizeof(char)*(len+2))) == NULL) {
+		if((data2->lines[i] = (char*)MALLOC(sizeof(char)*(len+growthSize))) == NULL) {
 			return NULL;		
 		}
-		data2->sizes[i] = len+2;
+		data2->sizes[i] = len+growthSize;
 		strcpy(data2->lines[i], buf);		
 	}
 	item->key = holder->key;
@@ -96,6 +99,8 @@ static ITEM *_createItem(ITEM_MANAGER *manager, DATA_HOLDER *src) {
 static INT _copyContent(ITEM_MANAGER *manager, ITEM *dest, DATA_HOLDER *src) {
 	int i = 0;
 	int len = 0;
+	int growthSize = manager->growthSize;
+	
 	char *buf = NULL;
 	PAIRED_FASTQ_DATA_HOLDER *holder = (PAIRED_FASTQ_DATA_HOLDER*)src;
 	PAIRED_FASTQ_ITEM *item = (PAIRED_FASTQ_ITEM*)dest;
@@ -109,11 +114,11 @@ static INT _copyContent(ITEM_MANAGER *manager, ITEM *dest, DATA_HOLDER *src) {
 		if(buf[len] == '\n'){
 			buf[len] = '\0';
 		}
-		if(data1->sizes[i] < len){
-			if((data1->lines[i] = (char*)REALLOC(data1->lines[i], sizeof(char)*(len+2))) == NULL) {
+		if(data1->sizes[i] <= len){
+			if((data1->lines[i] = (char*)REALLOC(data1->lines[i], sizeof(char)*(len+growthSize))) == NULL) {
 				return -1;		
 			}
-			data1->sizes[i] = len+2;
+			data1->sizes[i] = len+growthSize;
 		}
 		strcpy(data1->lines[i], buf);
 
@@ -122,11 +127,11 @@ static INT _copyContent(ITEM_MANAGER *manager, ITEM *dest, DATA_HOLDER *src) {
 		if(buf[len] == '\n'){
 			buf[len] = '\0';
 		}
-		if(data2->sizes[i] < len){
-			if((data2->lines[i] = (char*)REALLOC(data2->lines[i], sizeof(char)*(len+2))) == NULL) {
+		if(data2->sizes[i] <= len){
+			if((data2->lines[i] = (char*)REALLOC(data2->lines[i], sizeof(char)*(len+growthSize))) == NULL) {
 				return -1;		
 			}
-			data2->sizes[i] = len+2;
+			data2->sizes[i] = len+growthSize;
 		}
 		strcpy(data2->lines[i], buf);
 	}

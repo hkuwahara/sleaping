@@ -23,6 +23,7 @@ struct _ITEM_MANAGER {
     CREATE_ITEM *createItem;
 	COPY_CONTENT *copyContent;
 	FREE_ITEM *freeItem;
+	int growthSize;
 	CADDR_T rfu;	
 };
 
